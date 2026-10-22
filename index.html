@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catalogue de Livres</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Catalogue de livres</h1>
+
+      <form @submit.prevent="ajouterLivre" class="form-container">
+        <h2>Ajouter un nouveau livre</h2>
+
+        <div class="form-group">
+          <label for="title">Titre :</label>
+          <input id="title" type="text" v-model.trim="newBook.title" />
+        </div>
+
+        <div class="form-group">
+          <label for="author">Auteur :</label>
+          <input id="author" type="text" v-model.lazy="newBook.author" />
+        </div>
+
+        <div class="form-group">
+          <label for="year">Année :</label>
+          <input
+            id="year"
+            type="number"
+            v-model.number="newBook.year"
+            placeholder="2024"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="genre">Genre :</label>
+          <select id="genre" v-model="newBook.genre">
+            <option value="" disabled>Sélectionner un genre</option>
+            <option value="Roman">Roman</option>
+            <option value="Science-Fiction">Science-Fiction</option>
+            <option value="Philosophie">Philosophie</option>
+            <option value="Informatique">Informatique</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="image">Image de couverture :</label>
+          <input
+            id="image"
+            ref="imageInput"
+            type="file"
+            accept="image/*"
+            @change="selectionnerImage"
+          />
+          <small class="form-help">Formats image acceptés, 5 Mo maximum.</small>
+          <p v-if="imageError" class="image-error">{{ imageError }}</p>
+          <img
+            v-if="newBook.image"
+            :src="newBook.image"
+            alt="Prévisualisation de la couverture"
+            class="image-preview"
+          />
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label>
+            <input type="checkbox" v-model="newBook.isFav" />
+            Marquer comme favori
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="keyword">Mots-clés :</label>
+          <input
+            id="keyword"
+            type="text"
+            v-model.trim="nouveauMotCle"
+            @keyup.enter.prevent="ajouterMotCle"
+            placeholder="Ajouter un tag..."
+          />
+          <div class="chips-container">
+            <span
+              v-for="(keyword, index) in newBook.keywords"
+              :key="index"
+              class="chip"
+            >
+              {{ keyword }}
+              <button
+                type="button"
+                class="btn-remove-chip"
+                @click="retirerMotCle(index)"
+              >
+                &times;
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <button type="submit" :disabled="!formulaireValide" class="btn-submit">
+          Ajouter le livre
+        </button>
+      </form>
+
+      <h2>Liste des livres</h2>
+      <div class="book-list">
+        <div
+          v-for="book in books"
+          :key="book.id"
+          class="book"
+          :class="{ 'is-fav': book.isFav }"
+          @click="toggleFavori(book)"
+        >
+          <img
+            :src="book.image"
+            :alt="`Couverture de ${book.title}`"
+            class="book-cover"
+          />
+          <div class="book-header">
+            <h3>{{ book.title }}</h3>
+            <span class="fav-badge" v-if="book.isFav">Favori</span>
+          </div>
+          <p><strong>Auteur :</strong> {{ book.author }}</p>
+          <p><strong>Année :</strong> {{ book.year }}</p>
+          <p><strong>Genre :</strong> {{ book.genre }}</p>
+
+          <div
+            class="chips-container"
+            v-if="book.keywords && book.keywords.length"
+          >
+            <span v-for="tag in book.keywords" :key="tag" class="chip">
+              {{ tag }}
+            </span>
+          </div>
+
+          <button class="btn-delete" @click.stop="supprimerLivre(book)">
+            Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

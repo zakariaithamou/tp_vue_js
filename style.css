@@ -1,0 +1,195 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f5f7fa;
+  margin: 0;
+  padding: 24px;
+}
+
+#app {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+}
+
+/* Formulaire */
+.form-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="file"],
+.form-group select {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-help {
+  color: #64748b;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.image-error {
+  color: #dc2626;
+  font-size: 13px;
+  margin: 6px 0 0;
+}
+
+.image-preview {
+  width: 120px;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-top: 10px;
+  border: 1px solid #cbd5e1;
+}
+
+.checkbox-group {
+  flex-direction: row;
+  align-items: center;
+}
+
+.checkbox-group label {
+  font-weight: normal;
+  cursor: pointer;
+}
+
+/* Chips / Badges */
+.chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  background-color: #e2e8f0;
+  color: #334155;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 12px;
+}
+
+.btn-remove-chip {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  margin-left: 6px;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.btn-remove-chip:hover {
+  color: #ef4444;
+}
+
+/* Boutons */
+.btn-submit {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-submit:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.btn-delete {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Cartes des livres */
+.book-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.book {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    border-color 0.15s;
+}
+
+.book-cover {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  background-color: #e2e8f0;
+}
+
+.book:hover {
+  transform: translateY(-2px);
+}
+
+.book.is-fav {
+  border-color: #f59e0b;
+  background-color: #fffdf5;
+}
+
+.book-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.book-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.fav-badge {
+  font-size: 12px;
+  color: #f59e0b;
+  font-weight: bold;
+}
