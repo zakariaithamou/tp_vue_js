@@ -1,0 +1,115 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+  margin: 0;
+  padding: 2rem;
+}
+
+#app {
+  max-width: 650px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 1.5rem;
+  color: #0f172a;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+  color: #334155;
+  margin-top: 0;
+}
+
+/* Boutons de filtrage */
+.filter-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-buttons button {
+  min-width: 120px;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border: 2px solid #83888d;
+  background-color: #9a9da7;
+  color: #ffffff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.filter-buttons button:hover {
+  background-color: #83888d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(15, 23, 42, 0.2);
+}
+
+/* Bouton actif (lié dynamiquement via v-bind :class) */
+.filter-buttons button.active {
+  transform: translateY(-1px);
+  color: #ffffff;
+  box-shadow:
+    0 0 0 3px #bfdbfe,
+    0 4px 8px rgba(15, 23, 42, 0.25);
+}
+
+/* Liste des tâches */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+li strong {
+  color: #0f172a;
+}
+
+li span {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.task-count {
+  color: #475569;
+  font-weight: 600;
+}
+
+.task-status-button {
+  align-self: flex-start;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid #9a9da7;
+  border-radius: 6px;
+  background-color: #9a9da7;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.task-status-button:hover {
+  background-color: #83888d;
+}

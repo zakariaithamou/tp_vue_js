@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion des Tâches</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Mon Application de Tâches</h1>
+
+      <task-list></task-list>
+    </div>
+
+    <script>
+      const { createApp, ref, computed } = Vue;
+
+      const TaskList = {
+        template: `
+          <div class="task-list">
+            <h2>Liste des tâches</h2>
+
+            <div class="filter-buttons">
+              <button
+                type="button"
+                @click="setFilter('all')"
+                :class="{ active: filter === 'all' }">
+                Toutes
+              </button>
+              <button
+                type="button"
+                @click="setFilter('todo')"
+                class="todo-button"
+                :class="{ active: filter === 'todo' }">
+                À faire
+              </button>
+              <button
+                type="button"
+                @click="setFilter('done')"
+                class="done-button"
+                :class="{ active: filter === 'done' }">
+                Terminées
+              </button>
+            </div>
+
+            <p class="task-count">Nombre total de tâches : {{ totalTasks }}</p>
+
+            <h3 v-if="filter === 'todo'">Tâches à faire</h3>
+            <h3 v-else-if="filter === 'done'">Tâches terminées</h3>
+
+            <ul v-if="filteredTasks.length">
+              <li v-for="task in filteredTasks" :key="task.id">
+                <strong>{{ task.title }}</strong> : {{ task.description }}
+                <span>({{ task.completed ? 'Terminée' : 'À faire' }})</span>
+                <button
+                  type="button"
+                  class="task-status-button"
+                  @click="toggleTaskStatus(task)">
+                  {{ task.completed ? 'Marquer à faire' : 'Marquer terminée' }}
+                </button>
+              </li>
+            </ul>
+            <p v-else>Aucune tâche dans cette liste.</p>
+          </div>
+        `,
+        setup() {
+          const tasks = ref([
+            {
+              id: 1,
+              title: "Faire les courses",
+              description: "Acheter des légumes et du lait.",
+              completed: false,
+            },
+            {
+              id: 2,
+              title: "Faire du sport",
+              description: "Courir pendant 30 minutes.",
+              completed: true,
+            },
+            {
+              id: 3,
+              title: "Réviser pour l'examen",
+              description: "Relire le chapitre 5 du manuel.",
+              completed: false,
+            },
+          ]);
+          const filter = ref("all");
+
+          const setFilter = (selectedFilter) => {
+            filter.value = selectedFilter;
+          };
+
+          const toggleTaskStatus = (task) => {
+            task.completed = !task.completed;
+          };
+
+          const totalTasks = computed(() => tasks.value.length);
+
+          const filteredTasks = computed(() => {
+            if (filter.value === "todo") {
+              return tasks.value.filter((task) => !task.completed);
+            }
+
+            if (filter.value === "done") {
+              return tasks.value.filter((task) => task.completed);
+            }
+
+            return tasks.value;
+          });
+
+          return {
+            filter,
+            filteredTasks,
+            setFilter,
+            toggleTaskStatus,
+            totalTasks,
+          };
+        },
+      };
+
+      createApp({
+        components: {
+          TaskList,
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
