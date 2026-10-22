@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TP - Budget Étudiant</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app" class="container">
+      <h1>Suivi de Budget Personnel</h1>
+
+      <div class="budget-config">
+        <label for="budget">Budget mensuel fixé en MAD : </label>
+        <input id="budget" type="number" v-model.number="budgetMensuel" />
+      </div>
+
+      <form @submit.prevent="ajouterDepense" class="card">
+        <h2>Ajouter une dépense</h2>
+        <div class="form-group">
+          <label>Titre :</label>
+          <input type="text" v-model.trim="nouvelleDepense.titre" required />
+        </div>
+
+        <div class="form-group">
+          <label>Montant en MAD :</label>
+          <input
+            type="number"
+            step="0.01"
+            v-model.number="nouvelleDepense.montant"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Catégorie :</label>
+          <select v-model="nouvelleDepense.categorie" required>
+            <option value="" disabled>Sélectionner une catégorie</option>
+            <option v-for="cat in categories" :key="cat" :value="cat">
+              {{ cat }}
+            </option>
+          </select>
+        </div>
+
+        <button type="submit">Ajouter la dépense</button>
+      </form>
+
+      <div class="alertes-container">
+        <div
+          v-if="totalGeneral < budgetMensuel * 0.8"
+          class="alert alert-success"
+        >
+          Budget respecté (inférieur à 80%). Total : {{ totalGeneral }} MAD / {{
+          budgetMensuel }} MAD
+        </div>
+        <div
+          v-else-if="totalGeneral <= budgetMensuel"
+          class="alert alert-warning"
+        >
+          Attention, vous êtes entre 80% et 100% de votre budget ! Total : {{
+          totalGeneral }} MAD / {{ budgetMensuel }} MAD
+        </div>
+        <div v-else class="alert alert-danger">
+          Alerte : Budget mensuel dépassé ! Total : {{ totalGeneral }} MAD / {{
+          budgetMensuel }} MAD
+        </div>
+      </div>
+
+      <div class="stats-cards">
+        <div class="stat-card">
+          <h3>Total Général</h3>
+          <p>{{ totalGeneral }} MAD</p>
+        </div>
+        <div class="stat-card">
+          <h3>Total Filtré</h3>
+          <p>{{ totalFiltre }} MAD</p>
+        </div>
+        <div class="stat-card">
+          <h3>Moyenne</h3>
+          <p>{{ moyenneDepense.toFixed(2) }} MAD</p>
+        </div>
+      </div>
+
+      <div class="filtres card">
+        <span>Filtrer par catégorie : </span>
+        <button
+          :class="{ active: filtreCategorie === 'toutes' }"
+          @click="selectionnerCategorie('toutes')"
+        >
+          Toutes
+        </button>
+        <button
+          v-for="cat in categories"
+          :key="cat"
+          :class="{ active: filtreCategorie === cat }"
+          @click="selectionnerCategorie(cat)"
+        >
+          {{ cat }}
+        </button>
+      </div>
+
+      <!-- Étape 5 : Panneau de détail par catégorie (v-show) -->
+      <div class="card">
+        <button @click="afficherStats = !afficherStats" class="btn-toggle">
+          {{ afficherStats ? 'Masquer' : 'Afficher' }} le détail par catégorie
+        </button>
+
+        <div v-show="afficherStats" class="details-panel">
+          <h3>Détail des montants par catégorie :</h3>
+          <ul>
+            <li v-for="cat in categories" :key="cat">
+              <strong>{{ cat }} :</strong> {{ totalCategorie(cat) }} MAD
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Liste des dépenses</h2>
+
+        <table v-if="depensesFiltrees.length > 0" class="depenses-table">
+          <thead>
+            <tr>
+              <th>Titre</th>
+              <th>Catégorie</th>
+              <th>Montant</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="d in depensesFiltrees" :key="d.id">
+              <td>{{ d.titre }}</td>
+              <td><span class="badge">{{ d.categorie }}</span></td>
+              <td>{{ d.montant }} MAD</td>
+              <td>
+                <button @click="supprimerDepense(d)" class="btn-danger">
+                  Supprimer
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p v-else class="empty-msg">
+          Aucune dépense ne correspond à ce filtre.
+        </p>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
