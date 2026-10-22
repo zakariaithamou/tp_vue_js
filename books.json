@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "title": "Clean Code",
+    "author": "Robert C. Martin",
+    "year": 2008,
+    "genre": "Génie logiciel",
+    "isFav": true,
+    "image": "img/clean_code.jpg",
+    "link": "https://www.lkhibra.ma/books/clean-code.pdf"
+  },
+  {
+    "id": 2,
+    "title": "Introduction to Algorithms",
+    "author": "Cormen, Leiserson, Rivest, Stein",
+    "year": 2009,
+    "genre": "Algorithmique",
+    "isFav": false,
+    "image": "img/intro_algo.jpg",
+    "link": "https://www.cs.mcgill.ca/~akroit/math/compsci/Cormen%20Introduction%20to%20Algorithms.pdf"
+  },
+  {
+    "id": 3,
+    "title": "Design Patterns",
+    "author": "Gamma, Helm, Johnson, Vlissides",
+    "year": 1994,
+    "genre": "Génie logiciel",
+    "isFav": true,
+    "image": "img/design_patterns.jpg",
+    "link": "https://www.javier8a.com/itc/bd1/articulo.pdf"
+  },
+  {
+    "id": 4,
+    "title": "Le Petit Prince",
+    "author": "Antoine de Saint-Exupéry",
+    "year": 1943,
+    "genre": "Littérature",
+    "isFav": false,
+    "image": "img/le_petit_prince.jpg",
+    "link": "https://www.ease.fr/wordpress/wp-content/uploads/2019/11/PETIT-PRINCE-LE-Antoine-de-Saint-Exupery.pdf"
+  },
+  {
+    "id": 5,
+    "title": "Computer Networks",
+    "author": "Andrew S. Tanenbaum",
+    "year": 2010,
+    "genre": "Réseaux",
+    "isFav": false,
+    "image": "img/computer_networks.jpg",
+    "link": "https://networking.harshkapadia.me/files/books/computer-networks-tanenbaum-5th-edition.pdf"
+  },
+  {
+    "id": 6,
+    "title": "You Don't Know JS",
+    "author": "Kyle Simpson",
+    "year": 2015,
+    "genre": "Développement web",
+    "isFav": true,
+    "image": "img/js_book.jpg",
+    "link": "https://kingyinliang.github.io/PDF/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%EF%BC%88%E4%B8%8B%E5%8D%B7%EF%BC%89.pdf"
+  }
+]

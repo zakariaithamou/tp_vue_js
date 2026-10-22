@@ -1,0 +1,193 @@
+body {
+  font-family: system-ui, sans-serif;
+  max-width: 640px;
+  margin: 40px auto;
+  color: #1b2430;
+}
+
+.book {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #eff6ff;
+}
+h1 {
+  text-align: center;
+  color: #1e3a8a;
+  font-size: 36px;
+  margin-bottom: 35px;
+}
+.book h2 {
+  color: #1e3a8a;
+  font-size: 23px;
+  margin-top: 0;
+}
+
+.favori {
+  border: 2px solid #caa53d;
+  background-color: #fffbea;
+  box-shadow: 0 4px 12px rgba(202, 165, 61, 0.2);
+}
+.favor-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.filter-button {
+  padding: 8px 15px;
+  background-color: #eff6ff;
+  color: #1e3a8a;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.filter-button.active {
+  background-color: #1e3a8a;
+  color: white;
+  border: 2px solid #1e3a8a;
+}
+
+/* False : fond blanc, texte bleu */
+.filter-button.inactive {
+  background-color: white;
+  color: #1e3a8a;
+  border: 2px solid #1e3a8a;
+}
+
+.filter-button:hover {
+  opacity: 0.85;
+}
+.title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title h2 {
+  margin: 0;
+}
+
+.badge-favori {
+  display: inline-block;
+  background: #caa53d;
+  color: white;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-left: 8px;
+}
+
+.favor-number {
+  display: flex;
+  gap: 8px;
+  width: fit-content;
+  margin: auto 0 0 25px;
+  padding: 8px 15px;
+  background-color: #eff6ff;
+  color: #1e3a8a;
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  margin-bottom: 6px;
+}
+.book-form {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  background-color: #f8fafc;
+}
+.book-form h2 {
+  margin: 0;
+  color: #1e3a8a;
+}
+.book-form label {
+  display: grid;
+  gap: 5px;
+  font-weight: bold;
+}
+.book-form input[type="text"],
+.book-form input[type="number"],
+.book-form input[type="url"] {
+  padding: 9px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+.image-preview {
+  width: 100px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.checkbox-label {
+  display: flex !important;
+  align-items: center;
+  gap: 8px !important;
+}
+.book-info {
+  flex: 1;
+}
+
+.book-image {
+  width: 150px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.read-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #1e3a8a;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+}
+
+.read-btn:hover {
+  background-color: #274bae;
+}
+.details-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #f1f5f9;
+  color: #1e3a8a;
+  border: 2px solid #1e3a8a;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.details-button:hover {
+  background-color: #1e3a8a;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(30, 58, 138, 0.2);
+}
+.delete-button {
+  display: block;
+  margin-top: 12px;
+  padding: 8px 14px;
+  color: #b91c1c;
+  background-color: white;
+  border: 1px solid #b91c1c;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.delete-button:hover {
+  color: white;
+  background-color: #b91c1c;
+}

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Catalogue de livres</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <h1>Catalogue de livres</h1>
+      <div class="favor-container">
+        <p class="favor-number">
+          {{ nombre_books_Favoris }} livre(s) favori(s)
+        </p>
+        <button
+          class="filter-button"
+          @click="formulaireVisible = !formulaireVisible"
+        >
+          {{ formulaireVisible ? "Fermer le formulaire" : "Ajouter un livre" }}
+        </button>
+        <button
+          class="filter-button"
+          :class="favorisSeulement ? 'active' : 'inactive'"
+          @click="favorisSeulement = !favorisSeulement"
+        >
+          Afficher uniquement les favoris
+        </button>
+      </div>
+      <form
+        v-if="formulaireVisible"
+        class="book-form"
+        @submit.prevent="ajouterLivre"
+      >
+        <h2>Ajouter un livre</h2>
+        <label>
+          Titre
+          <input v-model.trim="nouveauLivre.title" type="text" required />
+        </label>
+        <label>
+          Auteur
+          <input v-model.trim="nouveauLivre.author" type="text" required />
+        </label>
+        <label>
+          Année
+          <input
+            v-model.number="nouveauLivre.year"
+            type="number"
+            min="0"
+            required
+          />
+        </label>
+        <label>
+          Genre
+          <input v-model.trim="nouveauLivre.genre" type="text" required />
+        </label>
+        <label>
+          Upload d'image
+          <input type="file" accept="image/*" @change="selectionnerImage" />
+        </label>
+        <img
+          v-if="nouveauLivre.image"
+          class="image-preview"
+          :src="nouveauLivre.image"
+          alt="Aperçu de l'image sélectionnée"
+        />
+        <label>
+          Lien de lecture
+          <input v-model.trim="nouveauLivre.link" type="url" />
+        </label>
+        <label class="checkbox-label">
+          <input v-model="nouveauLivre.isFav" type="checkbox" />
+          Ajouter aux favoris
+        </label>
+        <button class="filter-button" type="submit">Ajouter le livre</button>
+      </form>
+      <div
+        class="book"
+        :class="{ favori: book.isFav }"
+        v-for="book in (favorisSeulement ? livresFavoris : booksTriesParAnnee)"
+        :key="book.id"
+      >
+        <div class="book-info">
+          <div class="title">
+            <h2>{{ book.title }}</h2>
+            <span v-if="book.isFav" class="badge-favori"> Favori </span>
+          </div>
+
+          <p>Auteur : {{book.author}}</p>
+          <p>L'année : {{book.year}}</p>
+          <a :href="book.link" target="_blank" class="read-btn"
+            >Lire le livre</a
+          >
+          <button
+            class="details-button"
+            @click="book.showDetails = !book.showDetails"
+          >
+            Details
+          </button>
+
+          <p v-show="book.showDetails">Genre: {{ book.genre }}</p>
+          <button class="delete-button" @click="supprimerLivre(book.id)">
+            Supprimer
+          </button>
+        </div>
+        <img :src="book.image" :alt="book.title" class="book-image" />
+      </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
