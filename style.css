@@ -1,0 +1,106 @@
+:root {
+  color: #1f2937;
+  font-family: Arial, sans-serif;
+  background: #f3f4f6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 2rem 1rem;
+}
+
+#app {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+fieldset {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+legend {
+  float: left;
+  width: 100%;
+  margin-bottom: 0.75rem;
+  padding: 0;
+  color: #395ec5;
+  font-weight: bold;
+}
+
+input[type="text"],
+select {
+  padding: 0.5rem;
+  border: 1px solid #94a3b8;
+  border-radius: 4px;
+}
+
+input[type="text"] {
+  width: min(100%, 320px);
+}
+
+input[type="checkbox"],
+select {
+  margin-right: 1rem;
+}
+
+/* People list */
+.personne {
+  clear: both;
+  min-height: 140px;
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgb(15 23 42 / 10%);
+  line-height: 1.7;
+}
+
+.personne::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.personne img {
+  float: left;
+  width: 128px;
+  height: 128px;
+  margin: 0 1rem 0.5rem 0;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.personne > div {
+  min-height: 96px;
+}
+
+.misEnForme {
+  background: #e0ffff;
+  font-family: Georgia, serif;
+  font-size: 1.2rem;
+  margin: 1rem;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 1rem 0.5rem;
+  }
+
+  fieldset {
+    line-height: 2.2;
+  }
+
+  .personne img {
+    width: 108px;
+    height: 80px;
+  }
+}
