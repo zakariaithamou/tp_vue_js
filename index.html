@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tableau de bord de notes</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app" class="container">
+      <header>
+        <h1>Tableau de bord de notes</h1>
+      </header>
+
+      <section class="card stats-card">
+        <h2>Bilan du Semestre</h2>
+        <div class="stat-item">
+          <span class="label">Moyenne Générale :</span>
+          <span class="value">{{ moyenneGenerale }} / 20</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="label">Mention :</span>
+          <span v-if="moyenneGenerale >= 16" class="badge mention tres-bien"
+            >Très bien</span
+          >
+          <span v-else-if="moyenneGenerale >= 14" class="badge mention bien"
+            >Bien</span
+          >
+          <span
+            v-else-if="moyenneGenerale >= 12"
+            class="badge mention assez-bien"
+            >Assez bien</span
+          >
+          <span v-else-if="moyenneGenerale >= 10" class="badge mention passable"
+            >Passable</span
+          >
+          <span v-else class="badge mention insuffisant">Insuffisant</span>
+        </div>
+
+        <div class="extrema-grid" v-if="modules.length > 0">
+          <div class="extrema-card best" v-if="moduleMax">
+            <strong>Meilleur :</strong> {{ moduleMax.nom }} ({{ moduleMax.note }}/20)
+          </div>
+          <div class="extrema-card worst" v-if="moduleMin">
+            <strong>Moins bon :</strong> {{ moduleMin.nom }} ({{ moduleMin.note }}/20)
+          </div>
+        </div>
+
+        <p
+          class="validation-status"
+          :class="{ success: tousValides, alert: !tousValides }"
+        >
+          {{ tousValides ? "Tous les modules sont validés !" : "Certains modules ne sont pas validés" }}
+        </p>
+      </section>
+      <section class="card rattrapage-card">
+        <div class="section-header">
+          <h2>Modules à rattraper</h2>
+          <span class="badge rattrapage-badge"
+            >{{ modulesARattraper.length }}</span
+          >
+        </div>
+
+        <p v-if="modulesARattraper.length === 0" class="empty-msg">
+          Aucun rattrapage à prévoir.
+        </p>
+        <ul v-else class="rattrapage-list">
+          <li v-for="mod in modulesARattraper" :key="mod.id">
+            <strong>{{ mod.nom }}</strong> : {{ mod.note }}/20 (Coeff: {{ mod.coefficient }})
+          </li>
+        </ul>
+      </section>
+
+      <section class="card form-card">
+        <h2>Ajouter un module</h2>
+        <form @submit.prevent="ajouterModule" class="form-row">
+          <input
+            type="text"
+            v-model.trim="nouveauModule.nom"
+            placeholder="Nom du module"
+            required
+          />
+          <input
+            type="number"
+            v-model.number="nouveauModule.note"
+            step="0.25"
+            min="0"
+            max="20"
+            placeholder="Note"
+            required
+          />
+          <input
+            type="number"
+            v-model.number="nouveauModule.coefficient"
+            step="1"
+            min="1"
+            placeholder="Coefficient"
+            required
+          />
+          <button type="submit" class="btn btn-primary">Ajouter</button>
+        </form>
+      </section>
+
+      <section class="card list-card">
+        <div class="section-header">
+          <h2>Classement des modules</h2>
+          <input
+            type="text"
+            v-model="recherche"
+            placeholder="Rechercher un module..."
+            class="search-input"
+          />
+        </div>
+
+        <p v-if="modulesAffiches.length === 0" class="empty-msg">
+          Aucun module correspondant
+        </p>
+
+        <ul class="module-list" v-else>
+          <li v-for="mod in modulesAffiches" :key="mod.id" class="module-item">
+            <div class="module-info">
+              <span class="module-name">{{ mod.nom }}</span>
+              <span class="module-score">{{ mod.note }} / 20</span>
+              <span class="module-coeff">Coeff : {{ mod.coefficient }}</span>
+            </div>
+
+            <div class="actions">
+              <button @click="toggleDetail(mod.id)" class="btn btn-secondary">
+                {{ detailsVisibles[mod.id] ? 'Masquer détails' : 'Détails' }}
+              </button>
+              <button @click="supprimerModule(mod)" class="btn btn-danger">
+                Supprimer
+              </button>
+            </div>
+
+            <div v-show="detailsVisibles[mod.id]" class="detail-panel">
+              <p><strong>Identifiant :</strong> #{{ mod.id }}</p>
+              <p>
+                <strong>Points apportés :</strong> {{ (mod.note * mod.coefficient).toFixed(2) }} points
+              </p>
+              <p>
+                <strong>Statut :</strong>
+                {{ mod.note >= 10 ? 'Validé' : 'Non validé' }}
+              </p>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
