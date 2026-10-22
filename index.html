@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>TP Stock - Associative</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app" class="container">
+      <h2>Gestion du Stock - Associative</h2>
+
+      <div v-if="nombreRupture > 0" class="alert-bandeau">
+        Attention : Il y a {{ nombreRupture }} article(s) en rupture de stock !
+      </div>
+      <div class="resume">
+        <p>
+          <strong>Valeur totale du stock :</strong> {{
+          valeurTotaleStock.toFixed(2) }} DH
+        </p>
+        <p><strong>Articles en rupture :</strong> {{ nombreRupture }}</p>
+      </div>
+      <div class="filtres">
+        <input
+          type="text"
+          v-model="rechercheTexte"
+          placeholder="Rechercher par nom..."
+        />
+        <select v-model="filtreCategorie">
+          <option value="">Toutes les catégories</option>
+          <option value="Boisson">Boisson</option>
+          <option value="Snack">Snack</option>
+        </select>
+      </div>
+
+      <div class="ajout-form">
+        <h4>Ajouter un article</h4>
+        <input v-model="nouvelArticle.nom" placeholder="Nom" />
+        <select
+          v-model="nouvelArticle.categorie"
+          class="form-select"
+          required
+        >
+          <option value="" disabled>Choisir une catégorie</option>
+          <option value="Boisson">Boisson</option>
+          <option value="Snack">Snack</option>
+        </select>
+        <input
+          type="number"
+          v-model.number="nouvelArticle.quantite"
+          placeholder="Quantité"
+        />
+        <input
+          type="number"
+          v-model.number="nouvelArticle.prixUnitaire"
+          placeholder="Prix"
+        />
+        <input
+          type="number"
+          v-model.number="nouvelArticle.seuilAlerte"
+          placeholder="Seuil alerte"
+        />
+        <button @click="ajouterArticle">Ajouter</button>
+      </div>
+
+      <ul class="articles-list">
+        <li v-for="article in articlesFiltres" :key="article.id">
+          <div class="article-info">
+            <div class="article-title">
+              <strong>{{ article.nom }}</strong>
+              <span class="category">({{ article.categorie }})</span>
+            </div>
+            <div class="article-data">
+              <span>Quantité : <strong>{{ article.quantite }}</strong></span>
+              <span>Prix : <strong>{{ article.prixUnitaire }} DH</strong></span>
+
+              <!-- Badges d'état (ordre conditionnel strict) -->
+              <span v-if="article.quantite === 0" class="badge badge-rupture"
+                >Rupture</span
+              >
+              <span
+                v-else-if="article.quantite <= article.seuilAlerte"
+                class="badge badge-faible"
+                >Stock faible</span
+              >
+              <span v-else class="badge badge-ok">Ok</span>
+            </div>
+          </div>
+
+          <div class="article-actions">
+            <button class="quantity-button" @click="incrementer(article)">
+              +
+            </button>
+            <button class="quantity-button" @click="decrementer(article)">
+              -
+            </button>
+            <button class="details-button" @click="toggleDetail(article)">
+              {{
+                articleSelectionne === article ? "Masquer détails" : "Détails"
+              }}
+            </button>
+            <button class="delete-button" @click="supprimerArticle(article)">
+              Supprimer
+            </button>
+          </div>
+
+          <div v-show="articleSelectionne === article" class="details">
+            <p>Seuil d'alerte configuré : {{ article.seuilAlerte }}</p>
+            <p>
+              Valeur totale en rayon : {{ (article.quantite *
+              article.prixUnitaire).toFixed(2) }} DH
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
